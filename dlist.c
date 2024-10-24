@@ -17,10 +17,10 @@ dlist_new(void)
 	return list;
 }
 
-struct dlist_node *
+struct dnode *
 dlist_add_head(struct dlist *list, int val)
 {
-	struct dlist_node *node = malloc(sizeof(*node));
+	struct dnode *node = malloc(sizeof(*node));
 	if (!node)
 		return NULL;
 	node->val = val;
@@ -37,10 +37,10 @@ dlist_add_head(struct dlist *list, int val)
 	return node;
 }
 
-struct dlist_node *
+struct dnode *
 dlist_add_tail(struct dlist *list, int val)
 {
-	struct dlist_node *node = malloc(sizeof(*node));
+	struct dnode *node = malloc(sizeof(*node));
 	if (!node)
 		return NULL;
 	node->val = val;
@@ -57,7 +57,7 @@ dlist_add_tail(struct dlist *list, int val)
 	return node;
 }
 
-struct dlist_node *
+struct dnode *
 dlist_insert(struct dlist *list, size_t idx, int val)
 {
 	if (idx == 0)
@@ -65,17 +65,17 @@ dlist_insert(struct dlist *list, size_t idx, int val)
 	if (idx == list->size)
 		return dlist_add_tail(list, val);
 
-	struct dlist_node *node = list->head;
+	struct dnode *node = list->head;
 	for (size_t i = 0; i < idx; i++)
 		node = node->next;
 
 	return dlist_insert_before(list, node, val);
 }
 
-struct dlist_node *
-dlist_insert_after(struct dlist *list, struct dlist_node *prev, int val)
+struct dnode *
+dlist_insert_after(struct dlist *list, struct dnode *prev, int val)
 {
-	struct dlist_node *node = malloc(sizeof(*node));
+	struct dnode *node = malloc(sizeof(*node));
 	if (!node)
 		return NULL;
 
@@ -92,10 +92,10 @@ dlist_insert_after(struct dlist *list, struct dlist_node *prev, int val)
 	return node;
 }
 
-struct dlist_node *
-dlist_insert_before(struct dlist *list, struct dlist_node *next, int val)
+struct dnode *
+dlist_insert_before(struct dlist *list, struct dnode *next, int val)
 {
-	struct dlist_node *node = malloc(sizeof(*node));
+	struct dnode *node = malloc(sizeof(*node));
 	if (!node)
 		return NULL;
 
@@ -113,7 +113,7 @@ dlist_insert_before(struct dlist *list, struct dlist_node *next, int val)
 }
 
 void
-dlist_delete(struct dlist *list, struct dlist_node *node)
+dlist_delete(struct dlist *list, struct dnode *node)
 {
 	if (node->next)
 		node->next->prev = node->prev;
@@ -132,7 +132,7 @@ dlist_delete(struct dlist *list, struct dlist_node *node)
 void
 dlist_delete_index(struct dlist *list, size_t idx)
 {
-	struct dlist_node *node = list->head;
+	struct dnode *node = list->head;
 	while (idx--)
 		node = node->next;
 
@@ -142,8 +142,8 @@ dlist_delete_index(struct dlist *list, size_t idx)
 void
 dlist_clear(struct dlist *list)
 {
-	struct dlist_node *node = list->head;
-	struct dlist_node *next;
+	struct dnode *node = list->head;
+	struct dnode *next;
 
 	while (node) {
 		next = node->next;
